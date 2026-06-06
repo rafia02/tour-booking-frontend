@@ -24,3 +24,36 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.btn-brand-gradient {
+  background: linear-gradient(
+    135deg,
+    #e74c3c 0%,
+    #f4d03f 25%,
+    #2ecc71 50%,
+    #f4d03f 75%,
+    #e74c3c 100%
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.btn-brand-gradient:hover {
+  animation: gradient-shift 4s ease infinite;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
