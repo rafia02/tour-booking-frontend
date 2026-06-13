@@ -3,83 +3,56 @@
 import DropdownSelect from "./DropdownSelect";
 
 interface FiltersProps {
+  categories: string[];
+  cities: string[];
+  parishes: string[];
+  difficulties: string[];
+
   onCategoryChange?: (category: string) => void;
   onLocationChange?: (location: string) => void;
   onParishChange?: (parish: string) => void;
-  onDurationChange?: (duration: string) => void;
   onDifficultyChange?: (difficulty: string) => void;
 }
 
 export function ToursFilters({
+  categories = [],
+  cities = [],
+  parishes = [],
+  difficulties = [],
   onCategoryChange,
   onLocationChange,
   onParishChange,
-  onDurationChange,
   onDifficultyChange,
 }: FiltersProps) {
-  const categories = [
-    "All Categories",
-    "Adventure",
-    "Beach Tours",
-    "Water Sports",
-    "Cultural",
-  ];
-  const locations = [
-    "Select your hotel area",
-    "Ocho Rios",
-    "Montego Bay",
-    "Negril",
-    "Kingston",
-    "Port Antonio",
-  ];
-  const parishes = [
-    "All Parishes",
-    "St. Ann",
-    "Trelawny",
-    "St. James",
-    "Portland",
-    "Kingston",
-  ];
-  const durations = [
-    "Any Duration",
-    "2-4 hours",
-    "4-6 hours",
-    "6-8 hours",
-    "Full Day",
-  ];
-  const difficulties = ["Any Level", "Easy", "Moderate", "Challenging"];
-
   return (
-    <aside className="w-full md:w-72 bg-gray-50 p-6 md:p-8 rounded-lg">
+    <aside className="w-full lg:w-72 bg-white p-6 rounded-2xl shadow-sm">
       <h2 className="text-2xl font-bold text-gray-900 mb-8">Filters</h2>
+
       <DropdownSelect
         label="Category"
-        options={categories}
         name="category"
+        options={["All Categories", ...categories]}
         onChange={onCategoryChange}
       />
+
       <DropdownSelect
-        label="Your Pickup Location"
-        options={locations}
-        name="location"
+        label="City"
+        name="city"
+        options={["All Cities", ...cities]}
         onChange={onLocationChange}
       />
+
       <DropdownSelect
         label="Parish"
-        options={parishes}
         name="parish"
+        options={["All Parishes", ...parishes]}
         onChange={onParishChange}
       />
-      <DropdownSelect
-        label="Duration"
-        options={durations}
-        name="duration"
-        onChange={onDurationChange}
-      />
+
       <DropdownSelect
         label="Difficulty"
-        options={difficulties}
         name="difficulty"
+        options={["All Levels", ...difficulties]}
         onChange={onDifficultyChange}
       />
     </aside>

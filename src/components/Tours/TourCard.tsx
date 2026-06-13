@@ -1,75 +1,106 @@
 "use client";
 
 import Image from "next/image";
-import { BiMapPin, BiStar } from "react-icons/bi";
+import Link from "next/link";
+import { BiMapPin, BiStar, BiTime } from "react-icons/bi";
+import img from "@/assets/images/login-bg.jpg";
 
 interface TourCardProps {
-  id: string;
+  _id: string;
   title: string;
-  location: string;
+  city: string;
   parish: string;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  price?: number;
+  images: string[];
+  durationHours: number;
+  difficulty: string;
+  pricing: {
+    fixedPricing: {
+      adultPrice: number;
+    };
+  };
 }
 
 export function TourCard({
-  id,
+  _id,
   title,
-  location,
+  city,
   parish,
-  image,
-  rating,
-  reviewCount,
-  price,
+  images,
+  durationHours,
+  difficulty,
+  pricing,
 }: TourCardProps) {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
-      <div className="relative w-full h-64 overflow-hidden">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-300"
-        />
-      </div>
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2">
-          {title}
-        </h3>
-        <div className="flex items-center gap-2 text-gray-600 mb-4">
-          <BiMapPin size={18} className="text-gray-500 flex-shrink-0" />
-          <span className="text-sm">{location}</span>
+    <Link href={`/tours/${_id}`}>
+      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 h-full">
+        {/* Image */}
+        <div className="relative h-64 w-full">
+          <Image
+            // src={images?.[0] || "/placeholder.jpg"}
+            src={img}
+            alt={title}
+            fill
+            className="object-cover hover:scale-105 transition duration-300"
+          />
         </div>
-        <div className="flex items-center gap-2 text-gray-600 mb-4">
-          <BiMapPin size={18} className="text-gray-500 flex-shrink-0" />
-          <span className="text-sm">{parish}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1">
+
+        {/* Content */}
+        <div className="p-5">
+          {/* Title */}
+          <h3 className="text-xl font-bold text-gray-900 line-clamp-2 mb-4">
+            {title}
+          </h3>
+
+          {/* Location */}
+          <div className="flex items-center gap-2 text-gray-600 mb-2">
+            <BiMapPin className="text-green-600" size={18} />
+            <span className="text-sm">
+              {city}, {parish}
+            </span>
+          </div>
+
+          {/* Duration */}
+          <div className="flex items-center gap-2 text-gray-600 mb-2">
+            <BiTime className="text-green-600" size={18} />
+            <span className="text-sm">{durationHours} Hours</span>
+          </div>
+
+          {/* Difficulty */}
+          <div className="mb-4">
+            <span className="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs capitalize">
+              {difficulty}
+            </span>
+          </div>
+
+          {/* Static rating (later reviews থেকে আসবে) */}
+          <div className="flex items-center gap-1 mb-4">
             {Array.from({ length: 5 }).map((_, i) => (
               <BiStar
                 key={i}
                 size={16}
-                className={
-                  i < Math.round(rating)
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-gray-300"
-                }
+                className="fill-yellow-400 text-yellow-400"
               />
             ))}
+
+            <span className="text-sm text-gray-500 ml-2">New Tour</span>
           </div>
-          <span className="text-sm text-gray-500 italic ml-2">
-            {reviewCount === 0 ? "No reviews" : `${reviewCount} reviews`}
-          </span>
+
+          {/* Price */}
+          <div className="border-t pt-4 flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">From</p>
+
+              <p className="text-2xl font-bold text-green-600">
+                ${pricing.fixedPricing.adultPrice}
+              </p>
+            </div>
+
+            <button className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition">
+              View Tour
+            </button>
+          </div>
         </div>
-        {price && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <p className="text-lg font-bold text-green-500">From ${price}</p>
-          </div>
-        )}
       </div>
-    </div>
+    </Link>
   );
 }
