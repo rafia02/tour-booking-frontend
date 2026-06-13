@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BiCross, BiMenu } from "react-icons/bi";
+import { RxCross2 } from "react-icons/rx";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -81,30 +82,56 @@ const Header = () => {
           <div className="flex items-center gap-4">
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="bg-gradient-to-r from-[#2ECC71] to-[#F5C542] text-black font-semibold px-5 py-2 rounded-full hover:scale-105 transition">
+              <button className="text-sm bg-gradient-to-r from-[#2ECC71] to-[#F5C542] text-black font-semibold px-5 py-2 rounded-full hover:scale-105 transition">
                 Book a Tour
               </button>
 
-              <Link
-                href="/login"
-                className={`text-sm font-medium transition-colors ${
-                  isScrolled
-                    ? "text-black hover:text-accent"
-                    : "text-white hover:text-accent"
-                }`}
-              >
-                Login
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    className={`text-sm font-medium ${
+                      isScrolled ? "text-black" : "text-white"
+                    }`}
+                  >
+                    Dashboard
+                  </Link>
 
-              <button
-                className={`px-5 py-2 rounded-full border transition-all duration-200 ${
-                  isScrolled
-                    ? "border-black text-black hover:bg-black hover:text-white"
-                    : "border-white text-white hover:bg-white hover:text-black"
-                }`}
-              >
-                Sign Up
-              </button>
+                  <button
+                    onClick={handleLogout}
+                    className={`text-sm px-5 py-2 rounded-full border ${
+                      isScrolled
+                        ? "border-black text-black"
+                        : "border-white text-white"
+                    }`}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className={`text-sm font-medium transition-colors ${
+                      isScrolled
+                        ? "text-black hover:text-accent"
+                        : "text-white hover:text-accent"
+                    }`}
+                  >
+                    Login
+                  </Link>
+
+                  <button
+                    className={`px-5 py-2 rounded-full border transition-all duration-200 ${
+                      isScrolled
+                        ? "border-black text-black hover:bg-black hover:text-white"
+                        : "border-white text-white hover:bg-white hover:text-black"
+                    }`}
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -117,58 +144,12 @@ const Header = () => {
               }`}
             >
               {isMenuOpen ? (
-                <BiCross className="w-6 h-6" />
+                <RxCross2 className="w-6 h-6" />
               ) : (
                 <BiMenu className="w-6 h-6" />
               )}
             </button>
           </div>
-
-          {user ? (
-            <>
-              <Link
-                href="/dashboard"
-                className={`text-sm font-medium ${
-                  isScrolled ? "text-black" : "text-white"
-                }`}
-              >
-                Dashboard
-              </Link>
-
-              <button
-                onClick={handleLogout}
-                className={`px-5 py-2 rounded-full border ${
-                  isScrolled
-                    ? "border-black text-black"
-                    : "border-white text-white"
-                }`}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className={`text-sm font-medium ${
-                  isScrolled ? "text-black" : "text-white"
-                }`}
-              >
-                Login
-              </Link>
-
-              <Link
-                href="/signup"
-                className={`px-5 py-2 rounded-full border ${
-                  isScrolled
-                    ? "border-black text-black"
-                    : "border-white text-white"
-                }`}
-              >
-                Sign Up
-              </Link>
-            </>
-          )}
         </div>
       </div>
 
