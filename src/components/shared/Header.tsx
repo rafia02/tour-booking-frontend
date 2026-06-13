@@ -1,12 +1,28 @@
 "use client";
 
+import { logout } from "@/redux/features/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/Hooks/hooks";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BiCross, BiMenu } from "react-icons/bi";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // user varify function
+
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  console.log("userrrrrrrrrr", user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,7 +35,7 @@ const Header = () => {
 
   const navItems = [
     { label: "Home", href: "#" },
-    { label: "Tours", href: "#" },
+    { label: "Tours", href: "/tours" },
     { label: "Airport Transfer", href: "#" },
     { label: "Build Your Adventure", href: "#" },
     { label: "About", href: "#" },
@@ -70,7 +86,7 @@ const Header = () => {
               </button>
 
               <Link
-                href="#"
+                href="/login"
                 className={`text-sm font-medium transition-colors ${
                   isScrolled
                     ? "text-black hover:text-accent"
@@ -107,6 +123,52 @@ const Header = () => {
               )}
             </button>
           </div>
+
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className={`text-sm font-medium ${
+                  isScrolled ? "text-black" : "text-white"
+                }`}
+              >
+                Dashboard
+              </Link>
+
+              <button
+                onClick={handleLogout}
+                className={`px-5 py-2 rounded-full border ${
+                  isScrolled
+                    ? "border-black text-black"
+                    : "border-white text-white"
+                }`}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className={`text-sm font-medium ${
+                  isScrolled ? "text-black" : "text-white"
+                }`}
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/signup"
+                className={`px-5 py-2 rounded-full border ${
+                  isScrolled
+                    ? "border-black text-black"
+                    : "border-white text-white"
+                }`}
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
