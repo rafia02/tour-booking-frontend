@@ -1,20 +1,44 @@
+"use client";
+
+import { useState } from "react";
+import { Drawer } from "antd";
+
 import DashboardHeader from "@/components/shared/DashboardHeader";
 import DashboardSidebar from "@/components/shared/DashboardSidebar";
-import Header from "@/components/shared/Header";
 
 export default function DashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <DashboardSidebar />
+      {/* Desktop Sidebar */}
+      <div className="hidden md:block">
+        <DashboardSidebar />
+      </div>
 
-      {/* Main */}
+      {/* Mobile Drawer */}
+      <Drawer
+        title="Admin Panel"
+        placement="left"
+        open={open}
+        onClose={() => setOpen(false)}
+        size={250}
+        styles={{
+          body: {
+            padding: 0,
+          },
+        }}
+      >
+        <DashboardSidebar />
+      </Drawer>
+
+      {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <DashboardHeader />
+        <DashboardHeader openSidebar={() => setOpen(true)} />
 
         <main className="p-6">{children}</main>
       </div>

@@ -57,3 +57,29 @@ body {
     background-position: 0% 50%;
   }
 }
+
+/* Hover */
+.dashboard_manu .ant-menu-item:not(.ant-menu-item-selected):hover {
+  background: rgb(249 250 251) !important; /* gray-50 */
+}
+
+/* Selected */
+.dashboard_manu .ant-menu-item-selected {
+  background: rgb(236 254 255) !important; /* cyan-50 */
+  color: #0891b2 !important;
+}
+
+/* Selected icon */
+.dashboard_manu .ant-menu-item-selected svg {
+  color: #0891b2 !important;
+}
+
+/* Prevent Ant Design blue hover/active */
+.dashboard_manu .ant-menu-item:active {
+  background: rgb(236 254 255) !important;
+}
+
+/* Default icon color */
+.dashboard_manu .ant-menu-item svg {
+  color: #8e949e !important; /* gray-400 */
+}
